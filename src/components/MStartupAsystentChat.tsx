@@ -17,6 +17,9 @@ import {
 
 type UiMessage = StoredChatMessage;
 
+/** Logowanie do systemu ofert PARP — stały link przy kliknięciu rekordu dofinansowania. */
+const LSI_PARP_AUTH_URL = "https://lsi.parp.gov.pl/auth";
+
 function AiChatAvatar() {
   return (
     <div
@@ -64,9 +67,13 @@ function StructuredFinanceAnswer({ data }: { data: ChatStructured }) {
       {tracks.length > 0 ? (
         <div className="space-y-2.5">
           {tracks.map((t, i) => (
-            <div
+            <a
               key={`${t.id ?? "t"}-${i}`}
-              className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/50 px-3 py-2.5 dark:bg-black/15"
+              href={LSI_PARP_AUTH_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Przejdź do logowania LSI PARP (oferty dofinansowania)"
+              className="block rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)]/50 px-3 py-2.5 no-underline outline-none transition-colors hover:border-blue-500/45 hover:bg-blue-50/40 focus-visible:ring-2 focus-visible:ring-blue-500/35 dark:bg-black/15 dark:hover:border-blue-400/40 dark:hover:bg-blue-950/25"
             >
               <div className="flex items-start gap-2">
                 <ListTree
@@ -91,9 +98,12 @@ function StructuredFinanceAnswer({ data }: { data: ChatStructured }) {
                       ))}
                     </ul>
                   ) : null}
+                  <p className="mt-2 text-[11px] font-medium text-blue-600 dark:text-blue-400">
+                    Otwórz LSI PARP →
+                  </p>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       ) : null}
