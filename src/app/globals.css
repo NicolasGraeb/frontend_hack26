@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+/* Motyw z next-themes (klasa na <html>) — nie z OS, żeby jasny/ciemny był spójny z przełącznikiem */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --color-primary: #D4213D;
+  --color-accent: #2563EB;
+  /* Akcent mStartup (czat, formularze, ikony w panelu) — fiolet, spójny z MSTARTUP_UI_ACCENT w mstartup-constants */
+  --color-mstartup-accent: #7c3aed;
+  --color-mstartup-accent-deep: #5b21b6;
+  --color-bg: #FFFFFF;
+  --color-bg-secondary: #F5F5F7;
+  --color-text: #1C1C1E;
+  --color-text-secondary: #8E8E93;
+  --color-border: #E5E5EA;
+  --color-nav-inactive: #8E8E93;
+}
+
+html.dark,
+html.dark body {
+  --color-bg: #000000;
+  --color-bg-secondary: #1C1C1E;
+  --color-text: #F5F5F7;
+  --color-text-secondary: #98989D;
+  --color-border: #38383A;
+  --color-nav-inactive: #636366;
+  --color-mstartup-accent: #8b5cf6;
+  --color-mstartup-accent-deep: #6d28d9;
+}
+
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans), -apple-system, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes rocket-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-18deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-12deg);
+  }
+}
+
+@keyframes rocket-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, #f59e0b 35%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 24px 4px color-mix(in srgb, #f59e0b 20%, transparent);
+  }
+}
+
+.animate-rocket-float {
+  animation: rocket-float 2.4s ease-in-out infinite;
+}
+
+.animate-rocket-ring {
+  animation: rocket-glow 2.4s ease-in-out infinite;
+}
+
+/* Czat asystenta — wejście nowej odpowiedzi */
+@keyframes chat-answer-in {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes chat-answer-glow {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, #2563eb 45%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 14px color-mix(in srgb, #2563eb 0%, transparent);
+  }
+}
+
+.animate-chat-answer-in {
+  animation:
+    chat-answer-in 0.48s cubic-bezier(0.22, 1, 0.36, 1) both,
+    chat-answer-glow 1s ease-out 0.12s 1 both;
+}
+
+@keyframes asystent-drawer-enter {
+  from {
+    opacity: 0.96;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes asystent-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-asystent-drawer {
+  animation: asystent-drawer-enter 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-asystent-backdrop {
+  animation: asystent-backdrop-enter 0.22s ease-out forwards;
+}
