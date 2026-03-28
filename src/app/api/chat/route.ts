@@ -1,13 +1,6 @@
 import { NextResponse } from "next/server";
+import { getServerBackendUrl } from "@/lib/backend";
 import type { ChatMessagePayload } from "@/types/chat";
-
-function serverBackendUrl(): string {
-  const raw =
-    process.env.BACKEND_API_URL ??
-    process.env.NEXT_PUBLIC_API_URL ??
-    "http://127.0.0.1:8000";
-  return raw.replace(/\/$/, "");
-}
 
 function formatFastApiDetail(detail: unknown): string {
   if (typeof detail === "string") return detail;
@@ -51,7 +44,7 @@ export async function POST(request: Request) {
       : "Napisz pytanie o finansowanie startupu. Gdy backend FastAPI działa, odpowie model Gemini.";
 
   try {
-    const r = await fetch(`${serverBackendUrl()}/chat`, {
+    const r = await fetch(`${getServerBackendUrl()}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ messages }),

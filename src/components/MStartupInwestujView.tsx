@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Mail, Phone, Search, SlidersHorizontal, X } from "lucide-react";
-import { getBackendBaseUrl, getCompanyLogoUrl } from "@/lib/backend";
+import { apiUrl, getCompanyLogoUrl } from "@/lib/backend";
 import type { AnnouncementPublic, CategoryPublic } from "@/types/api";
 
 const inputClass =
@@ -66,12 +66,11 @@ export default function MStartupInwestujView() {
 
   useEffect(() => {
     let cancelled = false;
-    const base = getBackendBaseUrl();
     (async () => {
       try {
         const [annRes, catRes] = await Promise.all([
-          fetch(`${base}/announcements`),
-          fetch(`${base}/categories`),
+          fetch(apiUrl("/announcements")),
+          fetch(apiUrl("/categories")),
         ]);
         const annText = await annRes.text();
         const catText = catRes.ok ? await catRes.text() : "[]";

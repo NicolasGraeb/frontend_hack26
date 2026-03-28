@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ArrowLeft, Building2, Mail, User } from "lucide-react";
-import { getBackendBaseUrl } from "@/lib/backend";
+import { apiUrl, getBackendBaseUrl } from "@/lib/backend";
 import type { MeResponse } from "@/types/api";
 import { useServicesUi } from "@/store/servicesUi";
 
@@ -14,10 +14,9 @@ export default function MojaFirmaPanel() {
 
   useEffect(() => {
     let cancelled = false;
-    const base = getBackendBaseUrl();
     (async () => {
       try {
-        const res = await fetch(`${base}/me`);
+        const res = await fetch(apiUrl("/me"));
         const text = await res.text();
         if (cancelled) return;
         if (!res.ok) {

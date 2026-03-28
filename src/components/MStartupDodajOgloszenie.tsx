@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import { getBackendBaseUrl } from "@/lib/backend";
+import { apiUrl } from "@/lib/backend";
 
 export default function MStartupDodajOgloszenie() {
   const formId = useId();
@@ -52,8 +52,7 @@ export default function MStartupDodajOgloszenie() {
 
     setPending(true);
     try {
-      const base = getBackendBaseUrl();
-      const res = await fetch(`${base}/announcements`, {
+      const res = await fetch(apiUrl("/announcements"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

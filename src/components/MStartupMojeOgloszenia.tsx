@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { getBackendBaseUrl, getCompanyLogoUrl } from "@/lib/backend";
+import { apiUrl, getCompanyLogoUrl } from "@/lib/backend";
 import type { AnnouncementPublic, MeResponse } from "@/types/api";
 
 export type MStartupListingStatus = "active" | "ended";
@@ -86,10 +86,9 @@ export default function MStartupMojeOgloszenia() {
 
   useEffect(() => {
     let cancelled = false;
-    const base = getBackendBaseUrl();
     (async () => {
       try {
-        const meRes = await fetch(`${base}/me`);
+        const meRes = await fetch(apiUrl("/me"));
         const meText = await meRes.text();
         if (cancelled) return;
         if (!meRes.ok) {
@@ -104,7 +103,7 @@ export default function MStartupMojeOgloszenia() {
           setLoadErr(null);
           return;
         }
-        const annRes = await fetch(`${base}/announcements?company_id=${cid}`);
+        const annRes = await fetch(apiUrl(`/announcements?company_id=${cid}`));
         const annText = await annRes.text();
         if (cancelled) return;
         if (!annRes.ok) {
